@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Point Of Interest Records System</title>
+    </head>
+    <body>
+        <h1>POI Records</h1>
+        
+        <h2>Add POI</h2>
+
+        <form action="./addPoiDao.jsp" method="post">
+            <p>POI name:<input type="text" name="name" value="" /></p>
+            <p>POI location:<input type="text" name="location" value="" /></p>
+            <p>POI type:
+                <select name='type'>
+                    <option>Restaurant</option>
+                    <option>Bar</option>
+                    <option>Museum</option>
+                </select>
+            </p>
+            <p>
+            <input type="submit" value="Add Poi!" />
+        </form> 
+        <br />
+        <h2>POI Search By Type</h2>
+        
+        <form method="get" action="./searchTypeDao.jsp">
+            <p>POI type:
+                <select name="type">
+                    <option>Restaurant</option>
+                    <option>Bar</option>
+                    <option>Museum</option>
+                </select>
+            </p>
+            <input type="submit" value="Search!" />
+        </form>
+        <br />
+        <h2>POI Search By Location</h2>
+        
+        <form method="get" action="./searchLocDao.jsp">
+            <p>POI location: <input name="location" /></p>
+            <input type="submit" value="Search!" />
+        </form>
+        <br />
+        <h2>Like a POI</h2>
+        
+        <form method="post" action="./pointsOfInterest.jsp">
+            <input type="submit" value="Like POIs" />
+        </form>
+        <br />
+    </body>
+</html>
