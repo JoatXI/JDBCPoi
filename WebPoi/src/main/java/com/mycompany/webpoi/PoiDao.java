@@ -31,13 +31,12 @@ public class PoiDao {
         pStmt.setString(1, p.getName());
         pStmt.setString(2, p.getType());
         pStmt.setString(3, p.getLocation());
-        pStmt.setInt(4, p.getLikes());
+        pStmt.setLong(4, p.getLikes());
 
         int rowsAdded = pStmt.executeUpdate();
 
         // Was a row added successfully?
         if(rowsAdded > 0) {
-            // If so, get the keys added
             return true;
         }
         return false;
@@ -46,7 +45,7 @@ public class PoiDao {
     /**
      * Finds a POI by its name.
      * 
-     * @param poiName The name of the POI to find.
+     * @param name The name of the POI to find.
      * @return The found Poi object or null if not found.
      **/
     public ArrayList<Poi> findPoiByName(String name) throws SQLException {
@@ -57,13 +56,13 @@ public class PoiDao {
 
         // Loop through the results
         while(rs.next()) {
-            // Create an Event object with each result and add it to the
-            // ArrayList
+            // Create a Poi object with each result and add it to the ArrayList
 
             Poi p = new Poi(
                     rs.getString("name"),
                     rs.getString("type"),
-                    rs.getString("location")
+                    rs.getString("location"),
+                    rs.getLong("likes")
             );
             result.add(p);
         }
@@ -84,13 +83,13 @@ public class PoiDao {
 
         // Loop through the results
         while(rs.next()) {
-            // Create an Event object with each result and add it to the
-            // ArrayList
+            // Create a Poi object with each result and add it to the ArrayList
 
             Poi p = new Poi(
                     rs.getString("name"),
                     rs.getString("type"),
-                    rs.getString("location")
+                    rs.getString("location"),
+                    rs.getLong("likes")
             );
             result.add(p);
         }
@@ -100,7 +99,7 @@ public class PoiDao {
     /**
      * Finds and returns all POIs with a specific location.
      * 
-     * @param searchLocation The location of POIs to search for.
+     * @param location The location of POIs to search for.
      * @return A list of Poi objects at the specified location.
      */
     public ArrayList<Poi> findPoiByLocation(String location) throws SQLException {
@@ -111,13 +110,13 @@ public class PoiDao {
 
         // Loop through the results
         while(rs.next()) {
-            // Create an Event object with each result and add it to the
-            // ArrayList
+            // Create a Poi object with each result and add it to the ArrayList
 
             Poi p = new Poi(
                     rs.getString("name"),
                     rs.getString("type"),
-                    rs.getString("location")
+                    rs.getString("location"),
+                    rs.getLong("likes")
             );
             result.add(p);
         }
@@ -125,34 +124,34 @@ public class PoiDao {
     }
     
     public boolean likePoi(String name) throws SQLException {
-        // Check if "likes" column exists, and create it if not
-        Statement stmt = conn.createStatement();
-        stmt.executeUpdate("CREATE TABLE IF NOT EXISTS poi (name string, type string, location string, likes INTEGER DEFAULT 0)");
-        
-        PreparedStatement pStmt = conn.prepareStatement("UPDATE poi SET likes = likes + 1 WHERE name=?");
-        pStmt.setString(1, name);
+            // Check if "likes" column exists, and create it if not
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS poi (name string, type string, location string, likes INTEGER DEFAULT 0)");
 
-        int rowsUpdated = pStmt.executeUpdate();
+            PreparedStatement pStmt = conn.prepareStatement("UPDATE poi SET likes = likes + 1 WHERE name=?");
+            pStmt.setString(1, name);
 
-        if(rowsUpdated > 0) {
-            return true;
-        }
-        return false;
+            int rowsUpdated = pStmt.executeUpdate();
+
+            if(rowsUpdated > 0) {
+                return true;
+            }
+            return false;
     }
     
     public ArrayList<Poi> displayAllPois() throws SQLException {
         ArrayList<Poi> poiList = new ArrayList<>();
+        
+        try (PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM " + table)) {
+            ResultSet rs = pstmt.executeQuery();
 
-        String query = "SELECT * FROM " + table;
-        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-            ResultSet resultSet = pstmt.executeQuery();
+            while (rs.next()) {
+                String name = rs.getString("name");
+                String type = rs.getString("type");
+                String location = rs.getString("location");
+                long likes = rs.getLong("likes");
 
-            while (resultSet.next()) {
-                String name = resultSet.getString("name");
-                String type = resultSet.getString("type");
-                String location = resultSet.getString("location");
-
-                Poi poi = new Poi(name, type, location);
+                Poi poi = new Poi(name, type, location, likes);
                 poiList.add(poi);
             }
         }

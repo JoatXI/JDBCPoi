@@ -1,5 +1,8 @@
-com\mycompany\webpoi\PoiDao.class
-com\mycompany\webpoi\PointsOfInterestApp.class
 com\mycompany\webpoi\Poi.class
-com\mycompany\webpoi\User.class
 com\mycompany\webpoi\UserManagement.class
+com\mycompany\webpoi\CommentDao.class
+com\mycompany\webpoi\PoiDao.class
+com\mycompany\webpoi\UserDao.class
+com\mycompany\webpoi\PointsOfInterestApp.class
+com\mycompany\webpoi\Comment.class
+com\mycompany\webpoi\User.class

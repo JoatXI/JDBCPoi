@@ -12,9 +12,9 @@
 <%@page import="java.sql.SQLException" %>
 <%@page import="java.sql.ResultSet" %>
 <%@page import="java.sql.Statement" %>
-<%@page import="java.sql.PreparedStatement" %>
 <%@page import="com.mycompany.webpoi.Poi" %>
 <%@page import="com.mycompany.webpoi.PoiDao" %>
+<%@page import="com.mycompany.webpoi.User" %>
 
 <!DOCTYPE html>
 <html>
@@ -23,15 +23,17 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Student Search By Type</h1>
-        
+        <h1>SEARCH STUDENT BY TYPE</h1>
+        <br />
         <%
 
             Connection conn = null;
 
             try {
                 Class.forName("org.sqlite.JDBC");
-                conn = DriverManager.getConnection("jdbc:sqlite:S:\\#CODED\\JDBCPoi\\Database\\poi.db");
+                conn = DriverManager.getConnection("jdbc:sqlite:E:\\GitWorks\\AE2\\Database\\poi.db");
+                
+                User user = (User) session.getAttribute("user");
 
                 Statement stmt0 = conn.createStatement();
                 stmt0.executeUpdate("CREATE TABLE if not exists poi(name string, type string, location string, likes integer)");
@@ -41,26 +43,26 @@
                 String type = request.getParameter("type");
 
                 ArrayList<Poi> venues = dao.findPoiByType(type);
-                for(Poi p: venues)
-                {
+                for(Poi p: venues) {
                     out.println(p + "<br />");
                 }
+                if(user.isAdmin()) {
+                    out.println("Click to Return to <a href='./adminPage.jsp'>Homepage</a>.");
+                } else {
+                    out.println("Click to Return to <a href='./userPage.jsp'>Homepage</a>.");
+                }
             }
-            catch(SQLException e)    
-            {
+            
+            catch(SQLException e) {
                 out.println("<strong>Error with database: " + e + "</strong>");
             }    
-            finally
-            {
+            finally {
                 // Close the connection if it was made successfully
-                if(conn != null)
-                {
-                    try
-                    {
+                if(conn != null) {
+                    try {
                         conn.close();
                     }
-                    catch(SQLException closeException)
-                    {
+                    catch(SQLException closeException) {
                         out.println("<strong>Error with closing database: " + closeException + "</strong>");
                     }
                 }

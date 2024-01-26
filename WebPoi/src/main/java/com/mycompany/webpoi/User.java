@@ -2,47 +2,48 @@ package com.mycompany.webpoi;
 
 /**
  *
- * @author Group member 2
+ * @author Joat
  */
 public class User {
-    private String username;
-    private String password;
-    private String name;
-    private boolean isAdmin;
-
-    public User(String username, String password, String name, boolean isAdmin) {
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.isAdmin = isAdmin;
+    private String name, username, password;
+    private boolean adminStatus;
+    
+    public User(String nameIn, String usernameIn, String passwordIn, boolean admin) {
+        name = nameIn;
+        username = usernameIn;
+        password = passwordIn;
+        adminStatus = admin;
     }
-
-    // Getters and setters for user properties
+    
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
         return password;
     }
-
-    public void setPassword(String password) {
-        this.password = password;
+    
+    public void setPassword(String newPassword) {
+        password = newPassword;
     }
-
+    
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String newName) {
+        name = newName;
+    }
+    
+    public void setAdminStatus(boolean admin) {
+        adminStatus = admin;
     }
 
     public boolean isAdmin() {
-        return isAdmin;
+        return adminStatus;
     }
+    
+    public String toString() {
+        return "Name: " + name + " Username: " + username + " Admin status: " + adminStatus;
+    } 
 }

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Poi {
     private String name, type, location;
     private ArrayList<String> comments;
-    private int likes;
+    private long likes;
     private boolean liked; // Add a boolean flag to track whether a POI has been liked
     
     /**
@@ -17,9 +17,10 @@ public class Poi {
      * 
      * @param nameIn The name of POI.
      * @param typeIn The type of POI.
-     * @param locationIn The location of the POI.#
+     * @param locationIn The location of the POI
+     * @param likesIn The Number of likes for a POI
      */
-    public Poi(String nameIn, String typeIn, String locationIn) {
+    public Poi(String nameIn, String typeIn, String locationIn, long likesIn) {
         this.name = nameIn;
         this.type = typeIn;
         this.location = locationIn;
@@ -70,7 +71,7 @@ public class Poi {
      * 
      * @return The likes for the POI.
      */
-    public int getLikes() {
+    public long getLikes() {
         return this.likes;
     }
     
@@ -111,7 +112,7 @@ public class Poi {
      * Gets the comment associated with the POI.
      * 
      * @return The comment for the POI.
-     */
+     
     public ArrayList<String> getComments() {
         return comments;
     }
@@ -120,7 +121,7 @@ public class Poi {
      * Sets the comment for this point of interest (POI).
      * 
      * @param comment The new comment to set.
-     */
+     
     public void addComment(String comment) {
         comments.add(comment);
     }
@@ -130,10 +131,10 @@ public class Poi {
      * 
      * @param newComment is the new comment to be updated.
      * @param commentIndex is the position of the comment to be updated.
-     */
+     
     public void updateComment(int commentIndex, String newComment) {
     if (commentIndex >= 0 && commentIndex < comments.size()) {
         comments.set(commentIndex, newComment);
         }
-    }
+    }*/
 }

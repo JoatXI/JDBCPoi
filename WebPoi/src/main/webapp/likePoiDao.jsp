@@ -6,7 +6,6 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<%@page import="java.util.ArrayList" %>
 <%@page import="java.sql.DriverManager" %>
 <%@page import="java.sql.Connection" %>
 <%@page import="java.sql.SQLException" %>
@@ -15,6 +14,7 @@
 <%@page import="java.sql.PreparedStatement" %>
 <%@page import="com.mycompany.webpoi.Poi" %>
 <%@page import="com.mycompany.webpoi.PoiDao" %>
+<%@page import="com.mycompany.webpoi.User" %>
 
 <!DOCTYPE html>
 <html>
@@ -23,29 +23,37 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Like A POI</h1>
-        
+        <h1>LIKE A POI</h1>
+        <br />
         <%
             Connection conn = null;
 
             try {
                 Class.forName("org.sqlite.JDBC");
-                conn = DriverManager.getConnection("jdbc:sqlite:S:\\#CODED\\JDBCPoi\\Database\\poi.db");
+                conn = DriverManager.getConnection("jdbc:sqlite:E:\\GitWorks\\AE2\\Database\\poi.db");
+                
+                User user = (User) session.getAttribute("user");
 
                 PoiDao dao = new PoiDao(conn, "poi");
 
                 String name = request.getParameter("poiName");
-
+                
                 boolean likeSuccess = dao.likePoi(name);
 
                 if(likeSuccess) {
-                    out.println("POI liked successfully!");
+                    if(user.isAdmin()) {
+                        out.println("POI successfully liked. Click to Return to <a href='./adminPage.jsp'>Homepage</a>.");
+                    } else {
+                        out.println("POI successfully liked. Click to Return to <a href='./userPage.jsp'>Homepage</a>.");
+                    }
                 } else {
-                    out.println("Failed to like POI or POI not found!");
+                    out.println("Error! Could Not like POI. Click <a href='./pointsOfInterestDao.jsp'>HERE</a> to go back.");
                 }
-            } catch (SQLException | ClassNotFoundException e) {
+                
+            } catch (SQLException e) {
                 out.println("<strong>Error with database: " + e + "</strong>");
-            } finally {
+            } 
+            finally {
                 if (conn != null) {
                     try {
                         conn.close();
