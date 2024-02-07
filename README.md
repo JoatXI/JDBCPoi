@@ -36,14 +36,10 @@ Employed best practices in database indexing, caching strategies, and optimized 
 Successfully developed a functional Java-JSP web application that met the specified requirements.
 2. Maintainable Codebase:
 Implemented a well-organized and maintainable codebase by adhering to design patterns and coding best practices.
-3. Enhanced User Experience:
-Overcame front-end limitations by incorporating JavaScript and AJAX, providing users with a more interactive experience.
-4. Database Reliability:
+3. Database Reliability:
 Established a reliable connection with the backend database, ensuring data integrity and efficient retrieval.
-5. Testing Confidence:
+4. Testing Confidence:
 Introduced unit testing for backend components, increasing confidence in the reliability of the application.
-6. Scalable Architecture:
-Designed the application with scalability in mind, allowing for future expansion and accommodating a growing user base.
 
 
 # Conclusion
